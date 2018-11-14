@@ -1,21 +1,26 @@
 package aspects;
 
 import ca.uqac.gomoku.core.model.Grid;
-
 import java.util.List;
 import ca.uqac.gomoku.core.GridEventListener;
 import ca.uqac.gomoku.core.Player;
 
 public aspect AspectEndGame {
+	
+	//Indicateur si la partie est finie
+	private static boolean gameIsOver = false;
 
-	public List<GridEventListener> Grid.getListeners() {
-		return this.listeners;
-	}
-
-	pointcut end(Grid grid, Player player) : args(player)&&target(grid)&& call(void *.gameOver(Player));
-
-	after(Grid grid, Player player) : end(grid,player)
+	pointcut end() : call(void *.gameOver(Player));
+	
+	after() : end()
 	{
+		//passage à true de l'indicateur
+		gameIsOver = true;
+	}
+	
+	pointcut stopPlaceStone(): execution(public void placeStone(int, int, Player)) && if(gameIsOver==true);
+	void around() : stopPlaceStone() {
+		//On ne fait rien si la partie est finie
 	}
 
 }
