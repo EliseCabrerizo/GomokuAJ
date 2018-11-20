@@ -24,6 +24,7 @@ public aspect AspectEndGame {
 		// On met une condition afin que le code ne s'execute qu'une seule fois lorsque 
 		// l'on a un gagnant. Cela va nous permettre aussi d'arreter le jeu
 		if (i == 1) {
+			i++;
 			// On cree un nouveau joueur qui va avoir le meme nom que le gagnant mais avec une
 			// couleur differente. Cela permet que seule la combinaison gagnante soit de
 			// couleur differente et non tous les pions du joueur gagnant
